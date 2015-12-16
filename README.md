@@ -1,7 +1,7 @@
 Example application which showcases suggestions in Android's SearchView
 
 #### Installation
-Download an apk from [here](https://github.com/kosiara/suggestions-searchview-material-example/raw/master/released_apk/app-release.apk)
+Download apk [here](https://github.com/kosiara/suggestions-searchview-material-example/raw/master/released_apk/app-release.apk)
 
 <br/>
 #### Features/Libraries: 
@@ -13,6 +13,7 @@ Download an apk from [here](https://github.com/kosiara/suggestions-searchview-ma
 - SearchView with autosuggestions 
 - RecyclerView's MVVM 
 - CollapsingToolbarLayout
+- Android Intrumentation & Robotium unit tests
 
 #### Animations:
 <img src="https://raw.githubusercontent.com/kosiara/suggestions-searchview-material-example/master/screenshots/ActivityTransitions.gif"
