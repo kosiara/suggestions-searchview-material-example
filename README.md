@@ -23,8 +23,6 @@ Download apk [here](https://github.com/kosiara/suggestions-searchview-material-e
 <img src="https://raw.githubusercontent.com/kosiara/suggestions-searchview-material-example/master/screenshots/autoSuggestions.gif"
   width="240px" height="427px" />
 
-#### Screenshots: 
-
 #### Screencast:
 [![Suggestions SearchView Material Example](http://img.youtube.com/vi/jvneh7LdSvw/3.jpg)](https://youtu.be/jvneh7LdSvw "Suggestions SearchView Material Example")
 
