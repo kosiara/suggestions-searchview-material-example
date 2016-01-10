@@ -87,28 +87,23 @@ public class MainContentFragment extends Fragment {
 
 
     private void loadData() {
-        new Handler().post(new Runnable() {
+        mPhotosService.getPhotosAsync(new Callback<List<Item>>() {
             @Override
-            public void run() {
-                mPhotosService.getPhotosAsync(new Callback<List<Item>>() {
-                    @Override
-                    public void onResponse(Response<List<Item>> response, Retrofit retrofit) {
-                        setRefreshing(false);
-                        List<Item> list = response.body();
-                        mAdapter.addItems(list);
-                        if (mDataLoadedFunc != null)
-                            mDataLoadedFunc.apply(list);
-                    }
+            public void onResponse(Response<List<Item>> response, Retrofit retrofit) {
+                setRefreshing(false);
+                List<Item> list = response.body();
+                mAdapter.addItems(list);
+                if (mDataLoadedFunc != null)
+                    mDataLoadedFunc.apply(list);
+            }
 
-                    @Override
-                    public void onFailure(Throwable t) {
-                        setRefreshing(false);
-                        View view = getView();
-                        if (view != null)
-                            Snackbar.make(view, "Unable to connect", Snackbar.LENGTH_LONG)
-                                    .setAction("Action", null).show();
-                    }
-                });
+            @Override
+            public void onFailure(Throwable t) {
+                setRefreshing(false);
+                View view = getView();
+                if (view != null)
+                    Snackbar.make(view, "Unable to connect", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show();
             }
         });
     }

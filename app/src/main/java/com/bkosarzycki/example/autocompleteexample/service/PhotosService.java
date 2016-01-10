@@ -36,15 +36,6 @@ public class PhotosService {
 
     @Inject public PhotosService() {}
 
-    public Optional<List<Item>> getPhotos() {
-        try {
-            return Optional.of(service.getPhotos().execute().body());
-        } catch (Exception exc) {
-            Log.e(TAG, "Error getting photos: " + exc.toString());
-            return Optional.absent();
-        }
-    }
-
     public void getPhotosAsync(Callback<List<Item>> callback) {
         Call<List<Item>> call = service.getPhotos();
         call.enqueue(callback);

@@ -89,15 +89,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        final int BACK_ANIM_DURATION_MILLIS = 300;
-
-        final DetailsActivity selfRef = this;
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                selfRef.supportFinishAfterTransition();
-            }
-        }, (int)1.0*BACK_ANIM_DURATION_MILLIS);
+        DetailsActivity.this.supportFinishAfterTransition();
     }
 
     /**
