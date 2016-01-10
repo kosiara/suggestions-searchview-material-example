@@ -30,65 +30,11 @@ import retrofit.Retrofit;
 @Module
 public class PhotosService {
 
-    private static final String PHOTOS_API_URL = "http://jsonplaceholder.typicode.com";
     private static final String TAG = PhotosService.class.getName();
 
-    PhotoResource service;
+    @Inject PhotoResource service;
 
-
-    @Inject
-    public PhotosService(Context context) {
-
-        OkHttpClient okHttpClient = createOkHttpClientWithCache(context);
-        Retrofit retrofit = new Retrofit.Builder()
-                .client(okHttpClient)
-                .baseUrl(PHOTOS_API_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        service = retrofit.create(PhotoResource.class);
-    }
-
-    private OkHttpClient createOkHttpClientWithCache(final Context context) {
-        File httpCacheDirectory = new File(context.getCacheDir(), "rest_responses");
-
-        Cache cache = new Cache(httpCacheDirectory, 20 * 1024 * 1024);
-        OkHttpClient okHttpClient = new OkHttpClient();
-        okHttpClient.setCache(cache);
-        okHttpClient.interceptors().add(
-                new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request originalRequest = chain.request();
-
-                        String cacheHeaderValue = isOnline(context) ?
-                                "public, max-age=2419200" : "public, only-if-cached, max-stale=2419200" ;
-
-                        Request request = originalRequest.newBuilder().build();
-                        Response response = chain.proceed(request);
-                        return response.newBuilder().removeHeader("Pragma").removeHeader("Cache-Control")
-                                .header("Cache-Control", cacheHeaderValue).build();
-                    }
-                }
-        );
-        okHttpClient.networkInterceptors().add(
-                new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request originalRequest = chain.request();
-
-                        String cacheHeaderValue = isOnline(context) ?
-                                "public, max-age=2419200" : "public, only-if-cached, max-stale=2419200" ;
-
-                        Request request = originalRequest.newBuilder().build();
-                        Response response = chain.proceed(request);
-                        return response.newBuilder().removeHeader("Pragma").removeHeader("Cache-Control")
-                                .header("Cache-Control", cacheHeaderValue).build();
-                    }
-                }
-        );
-        return okHttpClient;
-    }
+    @Inject public PhotosService() {}
 
     public Optional<List<Item>> getPhotos() {
         try {
@@ -104,9 +50,4 @@ public class PhotosService {
         call.enqueue(callback);
     }
 
-    private boolean isOnline(Context context) {
-        ConnectivityManager connMgr = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
 }

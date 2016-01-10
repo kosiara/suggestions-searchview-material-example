@@ -19,7 +19,7 @@ import dagger.Component;
  *
  */
 @Singleton
-@Component(modules = MainAppModule.class)
+@Component(modules = {MainAppModule.class, NetworkModule.class})
 public interface MainComponent {
     Context context();
     SharedPreferences sharedPreferences();
