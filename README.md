@@ -14,6 +14,7 @@ Download apk [here](https://github.com/kosiara/suggestions-searchview-material-e
 - RecyclerView's MVVM 
 - CollapsingToolbarLayout
 - Android Intrumentation & Robotium unit tests
+- MVP
 
 #### Animations:
 <img src="https://raw.githubusercontent.com/kosiara/suggestions-searchview-material-example/master/screenshots/ActivityTransitions.gif"
