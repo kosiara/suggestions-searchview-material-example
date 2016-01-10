@@ -39,7 +39,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainActivityView {
 
     @Bind(R.id.toolbar) Toolbar mToolbar;
     @Bind(R.id.autocomplete_searchview) SearchView mSearchView;
@@ -48,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.activity_main_last_tapped_image_view) ImageView mLastTappedImageView;
     @Bind(R.id.fab) FloatingActionButton mSearchFab;
 
-    @Inject SettingsDialogManager mSettingsDialogManager;
     @Inject MainContentFragment mMainContentFragment;
+    @Inject MainActivityPresenterImpl mMainActivityPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         AutoCompleteApp.getApp(this).getDaggerMainComponent().inject(this);
+        mMainActivityPresenter.setView(this);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 
@@ -64,132 +65,52 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null)
                 return;
 
-            mMainContentFragment.setOnDataLoadedListener(new Function<List<Item> , Void>() {
-                @Override
-                public Void apply(List<Item>  list) {
-                    runFabScaleAnim();
-                    mMainContentFragment.applyFilter(null);
-                    loadSearchViewSuggestionsData(list);
-                    return null;
-                }
-            });
+            mMainActivityPresenter.setOnDataLoadedListener();
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main_container, mMainContentFragment).commit();
         }
 
+        mMainActivityPresenter.addAutoCompleteTextChangedListener();
+        mMainActivityPresenter.fillLastTappedInfo();
+    }
+
+    @Override public void applyFilter(String filterString) { mMainContentFragment.applyFilter(filterString); }
+
+    @Override
+    public void addAutoCompleteTextChangedListener(TextWatcher listener) {
         mSearchAutoComplete.setDropDownHeight(getResources().getDisplayMetrics().heightPixels/3);
         mSearchAutoComplete.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
-        mSearchAutoComplete.addTextChangedListener(
-                new TextWatcher() {
-                    @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-                    @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
-                    @Override public void afterTextChanged(Editable s) {
-                        if (s.toString().isEmpty())
-                            mMainContentFragment.applyFilter(null);
-                    }
-                }
-        );
-
-        fillLastTappedInfo();
+        mSearchAutoComplete.addTextChangedListener(listener);
     }
 
-    /**
-     * Animates FAB after successful data download.
-     */
-    private void runFabScaleAnim() {
-        float animScale = 1.25f;
-        mSearchFab.animate()
-                .scaleX(animScale)
-                .scaleY(animScale)
-                .setDuration(100)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSearchFab.animate().scaleX(1.0f)
-                                .scaleY(1.0f)
-                                .setDuration(100).start();
-                    }
-                }).start();
-    }
+    @Override public void setOnDataLoadedListener(Function<List<Item>, Void> func) { mMainContentFragment.setOnDataLoadedListener(func); }
 
-    /**
-     * Fill the upper-left corner toolbar data with total number of user taps
-     * and last-tapped item image.
-     */
-    private void fillLastTappedInfo() {
-        int noOfTaps = mSettingsDialogManager.getNumberOfSuggestionTaps();
-        String lastTappedUrl = mSettingsDialogManager.getLastTappedAutosuggestionUrl();
+    @Override public void setNoOfTappedAutosuggestionsText(String text) { mNoOfTappedAutosuggestionsTextView.setText(text); }
 
-        mNoOfTappedAutosuggestionsTextView.setText(new Integer(noOfTaps).toString());
-        if (lastTappedUrl != null && !lastTappedUrl.isEmpty())
-            Glide.with(this).load(lastTappedUrl).into(mLastTappedImageView);
+    @Override public void loadLastTappedImage(String url) { Glide.with(this).load(url).into(mLastTappedImageView); }
+
+    @Override
+    public void setAutoSuggestionsData(AutoSuggestionAdapter adapter, AdapterView.OnItemClickListener clickListener) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            SearchView.SearchAutoComplete searchSrcTextView = (SearchView.SearchAutoComplete) findViewById(android.support.v7.appcompat.R.id.search_src_text);
+            searchSrcTextView.setThreshold(1);
+            searchSrcTextView.setText("");
+            searchSrcTextView.setAdapter(adapter);
+            searchSrcTextView.setOnItemClickListener(clickListener);
+        }
     }
 
     @OnClick(R.id.fab)
     public void searchFabClick(View view) {
         String filterString = mSearchAutoComplete.getText().toString().trim();
-        mMainContentFragment.applyFilter(filterString.isEmpty() ? null : filterString);
+        mMainActivityPresenter.applySearchFilter(filterString);
     }
 
     @OnClick(R.id.sorting_settings_image_view)
     public void sortingSettingsClick(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.AppCompatAlertDialogStyle);
-        builder.setTitle("Suggestions sorting");
-        View settingsView = LayoutInflater.from(this).inflate(R.layout.settings_dialog_content, null);
-        mSettingsDialogManager.setCurrentView(settingsView);
-        builder.setView(settingsView);
-        final AlertDialog mSortingSettingsDialog = builder.show();
-        Button okBtn = (Button) mSortingSettingsDialog.findViewById(R.id.settings_dialog_ok_button);
-        okBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mSortingSettingsDialog != null) {
-                    mSettingsDialogManager.setCurrentSearchType(
-                            mSettingsDialogManager.getSearchTypeFromRadioButtons()
-                    );
-                    mSortingSettingsDialog.dismiss();
-                }
-            }
-        });
+        mMainActivityPresenter.createSortingSettingsDialog();
     }
 
-    /**
-     * Loads data for SearchView's suggestions
-     */
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void loadSearchViewSuggestionsData(List<Item> items) {
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            SearchView.SearchAutoComplete searchSrcTextView = (SearchView.SearchAutoComplete) findViewById(android.support.v7.appcompat.R.id.search_src_text);
-            searchSrcTextView.setThreshold(1);
-            searchSrcTextView.setText("");
-            final AutoSuggestionAdapter adapter = new AutoSuggestionAdapter<Item>(this, R.layout.item_suggestion_autocomplete, items);
-            adapter.setSettingsDialogManager(mSettingsDialogManager);
-            searchSrcTextView.setAdapter(adapter);
-            searchSrcTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Item item = (Item)adapter.getTypedItem(position);
-                    setLastTappedInfo(item);
-                    DetailsActivity.start(MainActivity.this, item, null);
-                    return;
-                }
-            });
-        }
-    }
-
-    /**
-     * Sets the last tapped Item which is later displayed in the Toolbar
-     * @param item
-     */
-    public void setLastTappedInfo(Item item) {
-        mSettingsDialogManager.increaseNumberOfSuggestionTaps();
-        mSettingsDialogManager.setLastTappedAutosuggestionUrl(item.getUrl());
-
-        Glide.with(this).load(item.getUrl()).into(mLastTappedImageView);
-        int noOfTaps = mSettingsDialogManager.getNumberOfSuggestionTaps();
-        mNoOfTappedAutosuggestionsTextView.setText(new Integer(noOfTaps).toString());
-    }
+    public MainActivityPresenterImpl getPresenter() { return mMainActivityPresenter; }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -205,5 +126,25 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * Animates FAB after successful data download.
+     */
+    @Override
+    public void runFabScaleAnim() {
+        float animScale = 1.25f;
+        mSearchFab.animate()
+                .scaleX(animScale)
+                .scaleY(animScale)
+                .setDuration(100)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSearchFab.animate().scaleX(1.0f)
+                                .scaleY(1.0f)
+                                .setDuration(100).start();
+                    }
+                }).start();
     }
 }

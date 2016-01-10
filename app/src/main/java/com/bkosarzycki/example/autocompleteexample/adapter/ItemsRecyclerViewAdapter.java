@@ -49,7 +49,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerViewAdapterBase<Item, Recy
     public void onClick(View v) {
         RecyclerItemView view = (RecyclerItemView)v;
         Item item = view.getItem();
-        ((MainActivity)mMainActivity).setLastTappedInfo(item);
+        ((MainActivity)mMainActivity).getPresenter().setLastTappedInfo(item);
         DetailsActivity.start(mMainActivity, item, view.getThumbnailImageView());
     }
 
