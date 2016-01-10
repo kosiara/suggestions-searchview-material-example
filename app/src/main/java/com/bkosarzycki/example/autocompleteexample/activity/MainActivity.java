@@ -50,14 +50,12 @@ public class MainActivity extends AppCompatActivity {
     @Inject SettingsDialogManager mSettingsDialogManager;
     @Inject MainContentFragment mMainContentFragment;
 
-    Activity mContextActivity;
     AutoSuggestionAdapter mAutoSuggestionAdapter;
     AlertDialog mSortingSettingsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContextActivity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         AutoCompleteApp.getApp(this).getDaggerMainComponent().inject(this);
@@ -175,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     Item item = (Item)adapter.getTypedItem(position);
                     setLastTappedInfo(item);
-                    DetailsActivity.start(mContextActivity, item, null);
+                    DetailsActivity.start(MainActivity.this, item, null);
                     return;
                 }
             });

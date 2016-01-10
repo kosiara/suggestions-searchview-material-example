@@ -102,7 +102,6 @@ public class DetailsActivity extends AppCompatActivity {
     public static void start(Activity activity, Item item, View sharedImageView) {
         Intent myIntent = new Intent(activity, DetailsActivity.class);
         myIntent.putExtra("item", new Gson().toJson(item));
-        //myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
         if (sharedImageView != null && android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             activity.startActivity(myIntent,
