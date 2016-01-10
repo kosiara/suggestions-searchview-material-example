@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.bkosarzycki.example.autocompleteexample.activity.AboutActivity;
-import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
-import com.bkosarzycki.example.autocompleteexample.activity.MainActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.details.DetailsActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.main.MainActivity;
 import com.bkosarzycki.example.autocompleteexample.fragment.MainContentFragment;
 
 import javax.inject.Singleton;
@@ -19,8 +19,8 @@ import dagger.Component;
  *
  */
 @Singleton
-@Component(modules = ServicesModule.class)
-public interface ServicesComponent {
+@Component(modules = {MainAppModule.class, NetworkModule.class})
+public interface MainComponent {
     Context context();
     SharedPreferences sharedPreferences();
     void inject(MainActivity mainActivity);

@@ -3,27 +3,27 @@ package com.bkosarzycki.example.autocompleteexample;
 import android.app.Application;
 import android.content.Context;
 
-import com.bkosarzycki.example.autocompleteexample.inject.DaggerServicesComponent;
-import com.bkosarzycki.example.autocompleteexample.inject.ServicesComponent;
-import com.bkosarzycki.example.autocompleteexample.inject.ServicesModule;
+import com.bkosarzycki.example.autocompleteexample.inject.DaggerMainComponent;
+import com.bkosarzycki.example.autocompleteexample.inject.MainAppModule;
+import com.bkosarzycki.example.autocompleteexample.inject.MainComponent;
 
 /**
  * Created by bkosarzycki on 12/12/15.
  */
 public class AutoCompleteApp extends Application {
 
-    ServicesComponent component;
+    MainComponent component;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        component = DaggerServicesComponent
+        component = DaggerMainComponent
                 .builder()
-                .servicesModule(new ServicesModule(getApplicationContext()))
+                .mainAppModule(new MainAppModule(getApplicationContext()))
                 .build();
     }
 
-    public ServicesComponent getServicesComponent() {
+    public MainComponent getDaggerMainComponent() {
         return component;
     }
 

@@ -2,14 +2,13 @@ package com.bkosarzycki.example.autocompleteexample.adapter;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
-import com.bkosarzycki.example.autocompleteexample.activity.MainActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.details.DetailsActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.main.MainActivity;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
 import com.bkosarzycki.example.autocompleteexample.search.SearchFilter;
 import com.bkosarzycki.example.autocompleteexample.view.RecyclerItemView;
@@ -50,7 +49,7 @@ public class ItemsRecyclerViewAdapter extends RecyclerViewAdapterBase<Item, Recy
     public void onClick(View v) {
         RecyclerItemView view = (RecyclerItemView)v;
         Item item = view.getItem();
-        ((MainActivity)mMainActivity).setLastTappedInfo(item);
+        ((MainActivity)mMainActivity).getPresenter().setLastTappedInfo(item);
         DetailsActivity.start(mMainActivity, item, view.getThumbnailImageView());
     }
 

@@ -14,12 +14,12 @@ import dagger.Provides;
  * Dagger2 app main module
  */
 @Module
-public class ServicesModule {
+public class MainAppModule {
 
     private final Context context;
     private String PREF_NAME = "prefs";
 
-    public ServicesModule(Context context) {
+    public MainAppModule(Context context) {
         this.context = context;
     }
 

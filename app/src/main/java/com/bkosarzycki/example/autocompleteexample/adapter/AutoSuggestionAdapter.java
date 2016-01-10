@@ -11,12 +11,9 @@ import android.widget.Filter;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
 import com.bkosarzycki.example.autocompleteexample.search.SearchFilter;
 import com.bkosarzycki.example.autocompleteexample.setting.SettingsDialogManager;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
