@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bkosarzycki.example.autocompleteexample.R;
+import com.bkosarzycki.example.autocompleteexample.activity.main.MainActivity;
 import com.robotium.solo.Solo;
 
 public class MainActivityTest

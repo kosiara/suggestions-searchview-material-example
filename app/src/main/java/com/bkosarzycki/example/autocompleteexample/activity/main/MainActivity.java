@@ -1,4 +1,4 @@
-package com.bkosarzycki.example.autocompleteexample.activity;
+package com.bkosarzycki.example.autocompleteexample.activity.main;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.bkosarzycki.example.autocompleteexample.AutoCompleteApp;
 import com.bkosarzycki.example.autocompleteexample.R;
+import com.bkosarzycki.example.autocompleteexample.activity.AboutActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
 import com.bkosarzycki.example.autocompleteexample.adapter.AutoSuggestionAdapter;
 import com.bkosarzycki.example.autocompleteexample.fragment.MainContentFragment;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
@@ -48,9 +50,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject SettingsDialogManager mSettingsDialogManager;
     @Inject MainContentFragment mMainContentFragment;
-
-    AutoSuggestionAdapter mAutoSuggestionAdapter;
-    AlertDialog mSortingSettingsDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         View settingsView = LayoutInflater.from(this).inflate(R.layout.settings_dialog_content, null);
         mSettingsDialogManager.setCurrentView(settingsView);
         builder.setView(settingsView);
-        mSortingSettingsDialog = builder.show();
+        final AlertDialog mSortingSettingsDialog = builder.show();
         Button okBtn = (Button) mSortingSettingsDialog.findViewById(R.id.settings_dialog_ok_button);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 
 import com.bkosarzycki.example.autocompleteexample.activity.AboutActivity;
 import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
-import com.bkosarzycki.example.autocompleteexample.activity.MainActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.main.MainActivity;
 import com.bkosarzycki.example.autocompleteexample.fragment.MainContentFragment;
 
 import javax.inject.Singleton;
