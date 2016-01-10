@@ -19,8 +19,8 @@ import dagger.Component;
  *
  */
 @Singleton
-@Component(modules = ServicesModule.class)
-public interface ServicesComponent {
+@Component(modules = MainAppModule.class)
+public interface MainComponent {
     Context context();
     SharedPreferences sharedPreferences();
     void inject(MainActivity mainActivity);

@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         mContextActivity = this;
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        AutoCompleteApp.getApp(this).getServicesComponent().inject(this);
+        AutoCompleteApp.getApp(this).getDaggerMainComponent().inject(this);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
 

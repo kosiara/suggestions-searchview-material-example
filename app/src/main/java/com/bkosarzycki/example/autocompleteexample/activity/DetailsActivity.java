@@ -52,7 +52,7 @@ public class DetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
         ButterKnife.bind(this);
-        AutoCompleteApp.getApp(this).getServicesComponent().inject(this);
+        AutoCompleteApp.getApp(this).getDaggerMainComponent().inject(this);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

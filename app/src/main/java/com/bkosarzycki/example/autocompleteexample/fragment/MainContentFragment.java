@@ -47,7 +47,7 @@ public class MainContentFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        AutoCompleteApp.getApp(this.getActivity()).getServicesComponent().inject(this);
+        AutoCompleteApp.getApp(this.getActivity()).getDaggerMainComponent().inject(this);
     }
 
     @Override
