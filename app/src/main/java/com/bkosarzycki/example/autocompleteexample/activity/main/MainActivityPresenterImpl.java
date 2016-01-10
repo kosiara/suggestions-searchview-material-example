@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.bkosarzycki.example.autocompleteexample.R;
-import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.details.DetailsActivity;
 import com.bkosarzycki.example.autocompleteexample.adapter.AutoSuggestionAdapter;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
 import com.bkosarzycki.example.autocompleteexample.setting.SettingsDialogManager;

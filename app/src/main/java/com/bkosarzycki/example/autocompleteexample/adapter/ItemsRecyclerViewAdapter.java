@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 
-import com.bkosarzycki.example.autocompleteexample.activity.DetailsActivity;
+import com.bkosarzycki.example.autocompleteexample.activity.details.DetailsActivity;
 import com.bkosarzycki.example.autocompleteexample.activity.main.MainActivity;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
 import com.bkosarzycki.example.autocompleteexample.search.SearchFilter;

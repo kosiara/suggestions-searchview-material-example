@@ -1,4 +1,4 @@
-package com.bkosarzycki.example.autocompleteexample.activity;
+package com.bkosarzycki.example.autocompleteexample.activity.details;
 
 import android.app.Activity;
 import android.app.ActivityOptions;

@@ -73,7 +73,8 @@
 - guava \n
 - SearchView with autosuggestions \n
 - RecyclerView's MVVM \n
-- CollapsingToolbarLayout"
+- CollapsingToolbarLayout \n
+- MVP"
             />
 
     </LinearLayout>
