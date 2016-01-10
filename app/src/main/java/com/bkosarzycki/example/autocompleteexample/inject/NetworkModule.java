@@ -1,7 +1,6 @@
 package com.bkosarzycki.example.autocompleteexample.inject;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import com.bkosarzycki.example.autocompleteexample.rest.PhotoResource;
 import com.bkosarzycki.example.autocompleteexample.util.AndroidUtil;

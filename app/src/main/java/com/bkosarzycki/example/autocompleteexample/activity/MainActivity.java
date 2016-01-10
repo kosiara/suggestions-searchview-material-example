@@ -1,7 +1,6 @@
 package com.bkosarzycki.example.autocompleteexample.activity;
 
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -13,9 +12,9 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;

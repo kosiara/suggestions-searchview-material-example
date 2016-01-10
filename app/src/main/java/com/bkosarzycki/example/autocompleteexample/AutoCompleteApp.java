@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.bkosarzycki.example.autocompleteexample.inject.DaggerMainComponent;
-import com.bkosarzycki.example.autocompleteexample.inject.MainComponent;
 import com.bkosarzycki.example.autocompleteexample.inject.MainAppModule;
+import com.bkosarzycki.example.autocompleteexample.inject.MainComponent;
 
 /**
  * Created by bkosarzycki on 12/12/15.

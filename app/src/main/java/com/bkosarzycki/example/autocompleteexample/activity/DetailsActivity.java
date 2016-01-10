@@ -1,36 +1,24 @@
 package com.bkosarzycki.example.autocompleteexample.activity;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bkosarzycki.example.autocompleteexample.AutoCompleteApp;
 import com.bkosarzycki.example.autocompleteexample.R;
-import com.bkosarzycki.example.autocompleteexample.adapter.AutoSuggestionAdapter;
-import com.bkosarzycki.example.autocompleteexample.fragment.MainContentFragment;
 import com.bkosarzycki.example.autocompleteexample.model.Item;
 import com.bumptech.glide.Glide;
-import com.google.common.base.Function;
 import com.google.gson.Gson;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
